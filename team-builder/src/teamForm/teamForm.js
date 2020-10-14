@@ -1,14 +1,54 @@
 import React, { useState } from 'react'
 
-export default function teamForm(props) {
+function TeamForm(props) {   
 
-const { teamData } = props
+const [formValues, setFormValues] = useState({name: '', email: '', role: ''});
+
+const onSubmit = event => {
+    event.preventDefault();
+    props.newTeamMember(formValues);
+};
+
+const onChange = event => {
+setFormValues({ ...formValues,[event.target.name]: event.target.value});
+};
 
 return (
-    <div>
-        <p>Name: {teamData.name}</p>
-        <p>Role: {teamData.role}</p>
-    </div>
-)
 
+        <form onSubmit={event => onSubmit(event)}>
+            <div>
+        <label>Name: 
+            <input
+            type='text'
+            name='name'
+            onChange={event => onChange(event)}
+            value={formValues.name}
+            /> </label>
+            <br />
+
+        <label>Email: 
+            <input
+            type='email'
+            name='email'
+            onChange={event => onChange(event)}
+            value={formValues.email}
+            /></label>
+            <br />
+
+        <label>Role: 
+            <input
+            type='text'
+            name='role'
+            value={formValues.role}
+            onChange={event => onChange(event)}
+            />
+            </label>
+            <br />
+                <button>Add New Member</button>
+            </div>
+        </form>
+    
+)
 }
+
+export default TeamForm;
